@@ -2,23 +2,21 @@ package model;
 
 public class Controller {
     private BankTurns bankTurns;
-    private int totalTurns;
     private int actualTurn;
 
     public Controller() {
         this.bankTurns = new BankTurns();
-        this.totalTurns = 1;
         this.actualTurn = 1;
     }
 
     public String giveTurn() {
         if (bankTurns.getTail() != null) {
-            totalTurns = bankTurns.getTail().getValue() + 1;
+            actualTurn = bankTurns.getTail().getValue() + 1;
         }
 
-        bankTurns.addNodeAtEnd(totalTurns);
+        bankTurns.addNodeAtEnd(actualTurn);
         
-        String msg = "Turno " + totalTurns + " agregado con exito";
+        String msg = "Turno " + actualTurn + " agregado con exito";
 
         return msg;
     }
@@ -27,13 +25,19 @@ public class Controller {
         if (bankTurns.searchNodeByValue(bankTurns.getRoot(), actualTurn) == null) {
             return "No hay turnos asignados";
         }
+
         return "Turno actual: " + actualTurn;
     }
 
     public String passTurn() {
         Turn actual = bankTurns.searchNodeByValue(bankTurns.getRoot(), actualTurn);
+
+        if (actual == null) {
+            actualTurn = 1;
+            return "No queda nadie en la lista";
+        }
         
-        if (bankTurns.searchNodeByValue(bankTurns.getRoot(), actualTurn).getTimesPassed() < 3) {
+        if (actual.getTimesPassed() < 3) {
             int timesPassed = actual.getTimesPassed();
 
             actual.setTimesPassed();
@@ -45,10 +49,6 @@ public class Controller {
             }
 
             return "Veces que no se ha presentado " + (timesPassed + 1);
-        }
-        
-        if (actual == null || actual.getNext() == null) {
-            return "No hay mas turnos";
         }
 
         int aux2 = actual.getNext().getValue(); 
@@ -63,9 +63,20 @@ public class Controller {
     }
 
     public String keepGoing() {
-        int aux = bankTurns.searchNodeByValue(bankTurns.getRoot(), actualTurn).getNext().getValue();
+        Turn actual = bankTurns.searchNodeByValue(bankTurns.getRoot(), actualTurn);
+        int aux = 1;
+        String msg = "Lista finalizada";
 
-        String msg = "Turno " + actualTurn + " atendido.";
+        if (actual == null) {
+            actualTurn = 1;
+            return "No queda nadie en la lista";
+        }
+
+        if (actual.getNext() != null) {
+            aux = actual.getNext().getValue();
+    
+            msg = "Turno " + actualTurn + " atendido.";
+        }
 
         bankTurns.deleteNodeByValue(bankTurns.getRoot(), actualTurn);
 

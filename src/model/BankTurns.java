@@ -33,64 +33,14 @@ public class BankTurns {
     }
 
     /*
-     * This function works but cannot resolve itself when a node is null
-     */
-    public void addNodeAfter(int value, int prevNode) {
-        Turn node = new Turn(value);
-        Turn before = searchNodeByValue(root, prevNode);
-        if (before != null) {
-            node.setNext(before.getNext());
-            node.setPrev(before);
-            before.setNext(node);
-        }
-    }
-
-    /*
-     * This function sets a new node as the root of the list
-     */
-    public void addNodeToStart(int value) {
-        Turn node = new Turn(value);
-
-        if (root != null) {
-            root.setPrev(node);
-            node.setNext(root);
-        }
-
-        root = node;
-    }
-
-    /*
-     * This function prints the graff
-     */
-    public void printGraf() {
-        printGraf(root);
-    }
-
-    private void printGraf(Turn pointer) {
-        if (pointer != null) {
-            System.out.print("Value: " + pointer.getValue());
-
-            if (pointer.getNext() != null) {
-                System.out.print(" Next: " + pointer.getNext().getValue());
-            }
-
-            if (pointer != root) {
-                System.out.println(" Prev: " + pointer.getPrev().getValue());
-            } else {
-                System.out.print("\n");
-            }
-
-            printGraf(pointer.getNext());
-        }
-
-        System.out.println("");
-    }
-
-    /*
      * This function returns the first element that matchs the value.
      * If no element matches the value, the function will return a null.
      */
     public Turn searchNodeByValue(Turn pointer, int value) {
+        if (pointer == null) {
+            return null;
+        }
+
         if (pointer.getValue() != value) {
             pointer = searchNodeByValue(pointer.getNext(), value);
         }
@@ -126,17 +76,31 @@ public class BankTurns {
      */
     public void deleteNodeByValue(Turn pointer, int value) {
         Turn before = searchNodeByEdge(pointer, value);
+        Turn actual = searchNodeByValue(pointer, value);
         Turn next = before.getNext().getNext();
 
-        if (before.getValue() == next.getValue()) {
-            before.getNext().setNext(null);
-            before.getNext().setPrev(null);
-            before.setNext(null);
-            before.setPrev(null);
+        if (actual == before) {
+            root.setNext(null);
+            root.setPrev(null);
+            tail.setNext(null);
+            tail.setPrev(null);
+            root = null;
+            tail = null;
             return;
         }
+
+        if (actual == tail) {
+            tail = next;
+        } 
+
+        if (actual == root) {
+            root = next;
+        }
+
         before.setNext(next);
         next.setPrev(before);
+        actual.setNext(null);
+        actual.setPrev(null);
     }
 
     public Turn getRoot() {
