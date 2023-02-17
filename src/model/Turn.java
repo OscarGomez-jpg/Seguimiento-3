@@ -1,11 +1,11 @@
 package model;
 
-public class Node {
+public class Turn {
     private int value;
-    private Node next;
-    private Node prev;
+    private Turn next;
+    private Turn prev;
 
-    public Node(int value) {
+    public Turn(int value) {
         this.value = value;
     }
 
@@ -17,19 +17,19 @@ public class Node {
         this.value = value;
     }
 
-    public Node getNext() {
+    public Turn getNext() {
         return next;
     }
 
-    public void setNext(Node next) {
+    public void setNext(Turn next) {
         this.next = next;
     }
 
-    public Node getPrev() {
+    public Turn getPrev() {
         return prev;
     }
 
-    public void setPrev(Node prev) {
+    public void setPrev(Turn prev) {
         this.prev = prev;
     }
 }

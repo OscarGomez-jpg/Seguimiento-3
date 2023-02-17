@@ -1,10 +1,10 @@
 package model;
 
-public class DoubleLinkedList {
-    private Node root;
-    private Node tail;
+public class BankTurns {
+    private Turn root;
+    private Turn tail;
 
-    public DoubleLinkedList() {
+    public BankTurns() {
         this.root = null;
         this.tail = null;
     }
@@ -14,14 +14,20 @@ public class DoubleLinkedList {
      * then the new node will be the root
      */
     public void addNodeAtEnd(int value) {
-        Node node = new Node(value);
+        Turn node = new Turn(value);
+        
         if (root == null) {
             root = node;
-        } else {
-            tail.setNext(node);
-            node.setPrev(tail);
         }
 
+        addNodeAtEnd(value, node);
+    }
+
+    private void addNodeAtEnd(int value, Turn node) {
+        tail.setNext(node);
+        node.setPrev(tail);
+        node.setNext(root);
+        root.setPrev(node);
         tail = node;
     }
 
@@ -29,8 +35,8 @@ public class DoubleLinkedList {
      * This function works but cannot resolve itself when a node is null
      */
     public void addNodeAfter(int value, int prevNode) {
-        Node node = new Node(value);
-        Node before = searchNodeByValue(root, prevNode);
+        Turn node = new Turn(value);
+        Turn before = searchNodeByValue(root, prevNode);
         if (before != null) {
             node.setNext(before.getNext());
             node.setPrev(before);
@@ -42,7 +48,7 @@ public class DoubleLinkedList {
      * This function sets a new node as the root of the list
      */
     public void addNodeToStart(int value) {
-        Node node = new Node(value);
+        Turn node = new Turn(value);
 
         if (root != null) {
             root.setPrev(node);
@@ -59,7 +65,7 @@ public class DoubleLinkedList {
         printGraf(root);
     }
 
-    private void printGraf(Node pointer) {
+    private void printGraf(Turn pointer) {
         if (pointer != null) {
             System.out.print("Value: " + pointer.getValue());
 
@@ -83,7 +89,7 @@ public class DoubleLinkedList {
      * This function returns the first element that matchs the value.
      * If no element matches the value, the function will return a null.
      */
-    public Node searchNodeByValue(Node pointer, int value) {
+    public Turn searchNodeByValue(Turn pointer, int value) {
         if (pointer.getValue() != value) {
             pointer = searchNodeByValue(pointer.getNext(), value);
         }
@@ -97,7 +103,7 @@ public class DoubleLinkedList {
      * if the last node .getNext() is null, that means that it is the last item
      * so the value was not found in the graf
      */
-    public Node searchNodeByEdge(Node pointer, int value) {
+    public Turn searchNodeByEdge(Turn pointer, int value) {
         if (pointer.getNext() == null) {
             return null;
         }
@@ -117,8 +123,8 @@ public class DoubleLinkedList {
      * If the target is the root, it will delete and turn the next node as the new
      * root
      */
-    public void deleteNodeByValue(Node pointer, int value) {
-        Node before = searchNodeByEdge(pointer, value);
+    public void deleteNodeByValue(Turn pointer, int value) {
+        Turn before = searchNodeByEdge(pointer, value);
         if (before == null) {
             if (root.getNext() == null) {
                 root = null;
@@ -131,7 +137,11 @@ public class DoubleLinkedList {
         }
     }
 
-    public Node getRoot() {
+    public Turn getRoot() {
         return root;
+    }
+
+    public Turn getTail() {
+        return tail;
     }
 }

@@ -17,7 +17,6 @@ public class Main {
 
     public static void main(String[] args) {
         Main main = new Main();
-        main.start();
 
         int option = -1;
         do {
@@ -42,8 +41,10 @@ public class Main {
                 "<< --------------------------------------------------------------------- >>\n" +
                 "<< -                               Opciones                            - >>\n" +
                 "<< --------------------------------------------------------------------- >>\n" +
-                "1. Empezar nuevo juego \n" +
-                "2. Mostrar tablero \n" +
+                "1. Dar turno \n" +
+                "2. Mostrar turno actual \n" +
+                "3. Pasar turno\n" +
+                "4. Seguir\n" +
                 "0. Salir";
     }
 
@@ -52,11 +53,18 @@ public class Main {
 
         switch (option) {
             case 1:
-                msg = play();
+                msg = giveTurn();
                 System.out.println(msg);
                 break;
             case 2:
-                System.out.println(controller.printProblemSet());
+                msg = showTurn();
+                System.out.println(msg);
+                break;
+            case 3:
+                msg = passTurn();
+                System.out.println(msg);
+                break;
+            case 4:
                 break;
             case 0:
                 System.out.println("Exit program.");
@@ -66,63 +74,20 @@ public class Main {
                 System.out.println("Invalid Option");
                 break;
         }
-    }
-
-    /**
-     * This function inits the characteristics that the game doesn't need to iterate
-     */
-    public void start() {
-        System.out.println("!!!Bienvenido!!!");
-
-        System.out.print("Ingrese el nombre del jugador: ");
-
-        String userName = reader.next();
-
-        controller.start(userName);
-
-        System.out.print("Ingrese la cantidad de ejercicios que tendra el juego: ");
-
-        int ammount = validateIntegerOption();
-
-        controller.createBoard(ammount);
-    }
-
-    public String play() {
-        String msg = "";
-        int totalProblems = 1;
 
         cleanConsole();
+    }
 
-        while(totalProblems < controller.getBoard().getLength()) {
-            Boolean skip = false;
+    public String giveTurn() {
+        return controller.giveTurn();
+    }
 
-            System.out.println(controller.printProblemSet());
+    public String showTurn() {
+        return controller.showTurn();
+    }
 
-            System.out.println("Ingrese el resultado (ingrese solo un decimal): ");
-            System.out.println("En caso de querer saltarse el ejercicio escriba 'paso'");
-            
-            String answer = reader.next();
-
-            answer.toLowerCase();
-
-            if (answer.equals("paso")) {
-                skip = true;
-            }
-
-            msg = controller.play(answer, skip);
-
-            System.out.println(msg);
-
-            wait(1000);
-
-            System.out.println("TOtal: " + totalProblems);
-
-            totalProblems += 1;
-
-            cleanConsole();
-        }
-
-        return "Su puntaje es de: " + controller.getPlayer().getScore();
+    public String passTurn() {
+        return controller.passTurn();
     }
 
     /**
