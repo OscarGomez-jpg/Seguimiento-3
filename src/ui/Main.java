@@ -65,6 +65,8 @@ public class Main {
                 System.out.println(msg);
                 break;
             case 4:
+                msg = keepGoing();
+                System.out.println(msg);
                 break;
             case 0:
                 System.out.println("Exit program.");
@@ -89,6 +91,10 @@ public class Main {
 
     public String passTurn() {
         return controller.passTurn();
+    }
+
+    public String keepGoing() {
+        return controller.keepGoing();
     }
 
     /**
