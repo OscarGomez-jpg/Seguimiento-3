@@ -2,11 +2,13 @@ package model;
 
 public class Turn {
     private int value;
+    private int timesPassed;
     private Turn next;
     private Turn prev;
 
     public Turn(int value) {
         this.value = value;
+        this.timesPassed = 0;
     }
 
     public int getValue() {
@@ -31,5 +33,13 @@ public class Turn {
 
     public void setPrev(Turn prev) {
         this.prev = prev;
+    }
+
+    public int getTimesPassed() {
+        return timesPassed;
+    }
+
+    public void setTimesPassed() {
+        this.timesPassed += 1;
     }
 }

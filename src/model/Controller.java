@@ -31,13 +31,33 @@ public class Controller {
     }
 
     public String passTurn() {
-        String msg = "Eliminando turno " + actualTurn + "...";
+        Turn actual = bankTurns.searchNodeByValue(bankTurns.getRoot(), actualTurn);
+        
+        if (bankTurns.searchNodeByValue(bankTurns.getRoot(), actualTurn).getTimesPassed() < 3) {
+            int timesPassed = actual.getTimesPassed();
 
-        int aux = bankTurns.searchNodeByValue(bankTurns.getRoot(), actualTurn).getNext().getValue();
+            actual.setTimesPassed();
+
+            actualTurn = actual.getNext().getValue();
+            
+            if (timesPassed == 2) {
+                return "Peligro, esta a 1 falta de perder su turno";
+            }
+
+            return "Veces que no se ha presentado " + (timesPassed + 1);
+        }
+        
+        if (actual == null || actual.getNext() == null) {
+            return "No hay mas turnos";
+        }
+
+        int aux2 = actual.getNext().getValue(); 
+
+        String msg = "Se ha eliminado el turno " + actualTurn + " por no haberse presentado";
 
         bankTurns.deleteNodeByValue(bankTurns.getRoot(), actualTurn);
 
-        actualTurn = aux;
+        actualTurn = aux2;
 
         return msg;
     }
