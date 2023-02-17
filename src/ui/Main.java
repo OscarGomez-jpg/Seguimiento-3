@@ -75,6 +75,7 @@ public class Main {
                 break;
         }
 
+        wait(1000);
         cleanConsole();
     }
 

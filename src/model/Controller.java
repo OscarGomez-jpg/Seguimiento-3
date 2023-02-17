@@ -10,11 +10,13 @@ public class Controller {
     }
 
     public String giveTurn() {
-        int actualTurn = bankTurns.getTail().getValue() + 1;
-
-        String msg = "Turno " + actualTurn + " agregado con exito";
+        if (bankTurns.getTail() != null) {
+            actualTurn = bankTurns.getTail().getValue() + 1;
+        }
 
         bankTurns.addNodeAtEnd(actualTurn);
+        
+        String msg = "Turno " + actualTurn + " agregado con exito";
 
         return msg;
     }

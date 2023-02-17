@@ -18,9 +18,11 @@ public class BankTurns {
         
         if (root == null) {
             root = node;
+            tail = node;
+        } else {
+            addNodeAtEnd(value, node);
         }
 
-        addNodeAtEnd(value, node);
     }
 
     private void addNodeAtEnd(int value, Turn node) {
