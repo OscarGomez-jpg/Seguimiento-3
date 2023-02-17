@@ -8,14 +8,14 @@ public class BankTurns {
         this.root = null;
         this.tail = null;
     }
-    
+
     /*
      * This function creates a node at the end, if the root is null
      * then the new node will be the root
      */
     public void addNodeAtEnd(int value) {
         Turn node = new Turn(value);
-        
+
         if (root == null) {
             root = node;
             tail = node;
@@ -29,7 +29,6 @@ public class BankTurns {
         tail.setNext(node);
         node.setPrev(tail);
         node.setNext(root);
-        root.setPrev(node);
         tail = node;
     }
 
@@ -100,7 +99,7 @@ public class BankTurns {
     }
 
     /*
-     * This function will always return the node that is pointing to the target 
+     * This function will always return the node that is pointing to the target
      * node. As I am working with linear nodes, there is no problem with it.
      * if the last node .getNext() is null, that means that it is the last item
      * so the value was not found in the graf
@@ -109,11 +108,11 @@ public class BankTurns {
         if (pointer.getNext() == null) {
             return null;
         }
-        
+
         if (pointer.getNext().getValue() != value) {
             pointer = searchNodeByEdge(pointer.getNext(), value);
         }
-        
+
         return pointer;
     }
 
@@ -127,16 +126,17 @@ public class BankTurns {
      */
     public void deleteNodeByValue(Turn pointer, int value) {
         Turn before = searchNodeByEdge(pointer, value);
-        if (before == null) {
-            if (root.getNext() == null) {
-                root = null;
-            } else {
-                root = root.getNext();
-            }
-        } else {
-            before.setNext(before.getNext().getNext());
-            before.getNext().setPrev(before);
+        Turn next = before.getNext().getNext();
+
+        if (before.getValue() == next.getValue()) {
+            before.getNext().setNext(null);
+            before.getNext().setPrev(null);
+            before.setNext(null);
+            before.setPrev(null);
+            return;
         }
+        before.setNext(next);
+        next.setPrev(before);
     }
 
     public Turn getRoot() {

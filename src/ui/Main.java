@@ -77,8 +77,8 @@ public class Main {
                 break;
         }
 
-        //wait(1000);
-        //cleanConsole();
+        wait(1000);
+        cleanConsole();
     }
 
     public String giveTurn() {
