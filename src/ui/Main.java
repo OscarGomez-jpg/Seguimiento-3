@@ -130,6 +130,12 @@ public class Main {
         }
     }
 
+    /**
+     * This function validates if the input of the user is an integer
+     * returns -1 if the input is incorrect
+     * 
+     * @return The number the user digits if it is an int
+     */
     public int validateIntegerOption() {
         int option = 0;
 
@@ -144,6 +150,12 @@ public class Main {
         return option;
     }
 
+    /**
+     * This function validates if the input of the user is a double
+     * returns -1 if the input is incorrect
+     * 
+     * @return The number the user digits if it is a double
+     */
     public double validateDoubleOption() {
         double option = 0;
 
