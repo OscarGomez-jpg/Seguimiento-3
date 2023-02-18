@@ -10,9 +10,12 @@ public class Main {
     
     private Scanner reader;
 
+    private Box container;
+
     public Main() {
         this.reader = new Scanner(System.in);
         this.controller = new Controller();
+        this.container = new Box();
     }
 
     public static void main(String[] args) {
@@ -37,15 +40,21 @@ public class Main {
     }
 
     public String printMenu() {
-        return "\n" +
-                "<< --------------------------------------------------------------------- >>\n" +
-                "<< -                               Opciones                            - >>\n" +
-                "<< --------------------------------------------------------------------- >>\n" +
+        String menu = 
                 "1. Dar turno \n" +
                 "2. Mostrar turno actual \n" +
                 "3. Pasar turno\n" +
                 "4. Seguir\n" +
                 "0. Salir";
+        String head = "<< --------------------------------------------------------------------- >>\n" +
+        "<< -                               Opciones                            - >>\n" +
+        "<< --------------------------------------------------------------------- >>\n";
+
+        menu = container.box(menu, 2, "|", "-");
+
+        container.setMsg("");
+
+        return head + menu;
     }
 
     public void executeOption(int option) {

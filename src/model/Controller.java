@@ -2,27 +2,31 @@ package model;
 
 public class Controller {
     private BankTurns bankTurns;
+    private int totalTurns;
     private int actualTurn;
 
     public Controller() {
         this.bankTurns = new BankTurns();
+        this.totalTurns = 1;
         this.actualTurn = 1;
     }
 
     public String giveTurn() {
         if (bankTurns.getTail() != null) {
-            actualTurn = bankTurns.getTail().getValue() + 1;
+            totalTurns = bankTurns.getTail().getValue() + 1;
         }
 
-        bankTurns.addNodeAtEnd(actualTurn);
+        bankTurns.addNodeAtEnd(totalTurns);
         
-        String msg = "Turno " + actualTurn + " agregado con exito";
+        String msg = "Turno " + totalTurns + " agregado con exito";
 
         return msg;
     }
 
     public String showTurn() {
         if (bankTurns.searchNodeByValue(bankTurns.getRoot(), actualTurn) == null) {
+            totalTurns = 1;
+            actualTurn = 1;
             return "No hay turnos asignados";
         }
 
@@ -34,6 +38,7 @@ public class Controller {
 
         if (actual == null) {
             actualTurn = 1;
+            totalTurns = 1;
             return "No queda nadie en la lista";
         }
         
@@ -69,6 +74,7 @@ public class Controller {
 
         if (actual == null) {
             actualTurn = 1;
+            totalTurns = 1;
             return "No queda nadie en la lista";
         }
 
